@@ -3,7 +3,7 @@
 namespace BiblioTech2.Api.Data;
 
 
-public class PluralizadorEspanol : IPluralize
+public class PluralizadorEspanol : IPluralizer
 {
     private const string Vocales = "aeiouáéíóú";
 
