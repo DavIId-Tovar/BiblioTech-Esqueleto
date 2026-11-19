@@ -4,7 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>4392b126-6d02-4a59-9852-52aa24c09d1e</UserSecretsId>
+    <UserSecretsId>feaedbab-e3a7-46ab-ad77-819322b63034</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,9 +12,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.15">
-      <PrivateAssets>all</PrivateAssets>
 		
-      
+      <PrivateAssets>all</PrivateAssets>
+
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.15">
@@ -28,6 +28,7 @@
     <Folder Include="Controllers\" />
     <Folder Include="Constants\" />
     <Folder Include="Configuracion\" />
+    <Folder Include="DTOs\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Middleware\" />
     <Folder Include="Models\" />
