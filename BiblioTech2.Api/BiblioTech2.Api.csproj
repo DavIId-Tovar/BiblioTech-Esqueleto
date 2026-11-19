@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -27,7 +27,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="Constants\" />
     <Folder Include="Configuracion\" />
-    <Folder Include="DTOs\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Middleware\" />
     <Folder Include="Models\" />
