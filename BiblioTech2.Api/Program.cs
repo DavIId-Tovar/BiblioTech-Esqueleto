@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);  // inicializa una nueva instancia, encargada de leer la configuración de la aplicación (appsettings.json, variables de entorno, etc.)
                                                    // y de configurar los servicios que la aplicación necesita para funcionar correctamente)
 
+builder.Services.AddDbContext<BibliotecaContext>(opciones =>
+opciones.UseSqlServer(builder.Configuration.GetConnectionString("BiblioTechConnection"))); 
+
 // Add services to the container.
 
 builder.Services.AddControllers(); // llama a la carpeta Controllers y registra todos los controladores que encuentre en ella, para que puedan ser utilizados por la aplicación
