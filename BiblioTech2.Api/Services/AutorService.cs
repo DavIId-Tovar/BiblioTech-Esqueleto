@@ -4,6 +4,7 @@ using BiblioTech2.Api.Models;
 using BiblioTech2.Api.Services;
 using BiblioTech2.Api.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using BiblioTech2.Api.Exceptions;
 
 namespace BiblioTech2.Api.Services;
 
@@ -35,7 +36,8 @@ public class AutorService (BibliotecaContext db) : IAutorService
                 Nacionalidad = a.Nacionalidad,
                 CantidadLibros = a.Libros.Count
             })
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync()
+            ?? throw new NoEncontradoException($"El autor {id} no existe");
     }
 
     public async Task<AutorDto> CrerAsync(AutorGuardarDto dto)
@@ -52,7 +54,9 @@ public class AutorService (BibliotecaContext db) : IAutorService
 
     public async Task ActualizarAsync(int id, AutorGuardarDto dto)
     {
-        var autor = await db.Autores.FindAsync(id);
+        var autor = await db.Autores.FindAsync(id)
+            ?? throw new NoEncontradoException($"El autor {id} no existe");
+       
         autor.Nombre = dto.Nombre.Trim();
         autor.Nacionalidad = string.IsNullOrWhiteSpace(dto.Nacionalidad) ? null : dto.Nacionalidad.Trim();
 
@@ -61,7 +65,8 @@ public class AutorService (BibliotecaContext db) : IAutorService
 
     public async Task EliminarAsync(int id)
     {
-        var autor = await db.Autores.FindAsync(id);
+        var autor = await db.Autores.FindAsync(id)
+            ?? throw new NoEncontradoException($"El autor {id} no existe");
 
         var cantidadLibros = await db.Libros.CountAsync(l => l.Autores.Any(a => a.Id == id));
         if (cantidadLibros > 0)
