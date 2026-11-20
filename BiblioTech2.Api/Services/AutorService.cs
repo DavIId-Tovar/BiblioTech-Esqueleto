@@ -9,7 +9,7 @@ namespace BiblioTech2.Api.Services;
 
 public class AutorService (BibliotecaContext db) : IAutorService
 {
-    public async Task<List<AutorDto>> listarAsync()
+    public async Task<List<AutorDto>> ListarAsync()
     {
         return await db.Autores
             .OrderBy(a => a.Nombre)
@@ -24,7 +24,7 @@ public class AutorService (BibliotecaContext db) : IAutorService
             .ToListAsync();
     }
 
-    public async Task<AutorDto> ObtenerAsync (int id)
+    public async Task<AutorDto> ObtenerAsync(int id)
     {
         return await db.Autores
             .Where(a => a.Id == id)
@@ -38,7 +38,7 @@ public class AutorService (BibliotecaContext db) : IAutorService
             .FirstOrDefaultAsync();
     }
 
-    public async Task<AutorDto> CrearAsync (AutorGuardarDto dto)
+    public async Task<AutorDto> CrerAsync(AutorGuardarDto dto)
     {
         var autor = new Autor
         {
@@ -57,7 +57,6 @@ public class AutorService (BibliotecaContext db) : IAutorService
         autor.Nacionalidad = string.IsNullOrWhiteSpace(dto.Nacionalidad) ? null : dto.Nacionalidad.Trim();
 
         await db.SaveChangesAsync();
-
     }
 
     public async Task EliminarAsync(int id)

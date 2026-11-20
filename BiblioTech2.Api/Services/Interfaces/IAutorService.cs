@@ -7,7 +7,7 @@ namespace BiblioTech2.Api.Services.Interfaces
         Task<List<AutorDto>> ListarAsync();
         Task<AutorDto?> ObtenerAsync(int id);
         Task<AutorDto> CrerAsync(AutorGuardarDto dto);
-        Task <bool> ActualizarAsync(int id, AutorGuardarDto dto);
-        Task <bool> EliminarAsync(int id);
+        Task ActualizarAsync(int id, AutorGuardarDto dto);
+        Task EliminarAsync(int id);
     }
 }
