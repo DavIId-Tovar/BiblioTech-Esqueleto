@@ -27,7 +27,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="Constants\" />
     <Folder Include="Configuracion\" />
-    <Folder Include="DTOs\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Middleware\" />
     <Folder Include="Models\" />
