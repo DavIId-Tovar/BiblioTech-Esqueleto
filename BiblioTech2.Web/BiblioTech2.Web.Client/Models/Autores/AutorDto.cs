@@ -1,5 +1,6 @@
 ﻿namespace BiblioTech2.Web.Client.Models.Autores;
 
+/// <summary>Lo que el front RECIBE de la API al consultar autores.</summary>
 public class AutorDto
 {
     public int Id { get; set; }

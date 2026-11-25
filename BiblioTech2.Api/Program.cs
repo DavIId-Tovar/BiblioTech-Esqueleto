@@ -1,10 +1,10 @@
+using Scalar.AspNetCore;
 using BiblioTech2.Api.Configuracion;
 using BiblioTech2.Api.Data;
 using BiblioTech2.Api.Middleware;
 using BiblioTech2.Api.Respuestas;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -2,7 +2,7 @@
 {
     public class RespuestaApi<T>
     {
-        public bool Exito { get; set; }
+        public bool Exito {  get; set; }
         public string Mensaje { get; set; } = string.Empty;
         public T? Datos { get; set; }
         public Dictionary<String, String[]>? Errores { get; set; }
@@ -22,7 +22,7 @@
             Exito = resultado.Exito,
             Mensaje = resultado.Mensaje
 
-        };
+        }; 
 
 
 

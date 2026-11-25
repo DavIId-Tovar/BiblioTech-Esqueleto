@@ -1,4 +1,7 @@
-﻿namespace BiblioTech2.Api.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace BiblioTech2.Api.Models;
 
 public partial class VwPrestamosVencido
 {

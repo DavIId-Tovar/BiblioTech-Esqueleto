@@ -15,12 +15,12 @@ public class AutorApiService(HttpClient http) : ApiServiceBase(http)
     public Task<RespuestaApi<AutorDto>> ObtenerAsync(int id)
         => EnviarAsync<AutorDto>(() => Http.GetAsync($"{Ruta}/{id}"));
 
-    public Task<RespuestaApi<AutorDto>> CrearAsync(AutorGuardarDto dto)
+    public Task<RespuestaApi<AutorDto>> CrearAsync(AutorGuardarDto dto)           
         => EnviarAsync<AutorDto>(() => Http.PostAsJsonAsync(Ruta, dto));
 
-    public Task<RespuestaApi<object>> ActualizarAsync(int id, AutorGuardarDto dto)
+    public Task<RespuestaApi<object>> ActualizarAsync(int id, AutorGuardarDto dto) 
         => EnviarAsync<object>(() => Http.PutAsJsonAsync($"{Ruta}/{id}", dto));
 
-    public Task<RespuestaApi<object>> EliminarAsync(int id)
+    public Task<RespuestaApi<object>> EliminarAsync(int id)                         
         => EnviarAsync<object>(() => Http.DeleteAsync($"{Ruta}/{id}"));
 }
