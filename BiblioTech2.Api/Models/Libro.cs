@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BiblioTech2.Api.Models;
+﻿namespace BiblioTech2.Api.Models;
 
 public partial class Libro
 {
