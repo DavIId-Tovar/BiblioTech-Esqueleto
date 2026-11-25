@@ -1,33 +1,33 @@
-﻿using BiblioTech2.Api.Data;
-using BiblioTech2.Api.DTOs.Autores;
+﻿using BiblioTech.Api.DTOs.Autores;
+using BiblioTech.Api.Services.Interfaces;
+using BiblioTech2.Api.Constants;
+using BiblioTech2.Api.Data;
 using BiblioTech2.Api.Models;
-using BiblioTech2.Api.Services;
-using BiblioTech2.Api.Services.Interfaces;
+using BiblioTech2.Api.Respuestas;
 using Microsoft.EntityFrameworkCore;
-using BiblioTech2.Api.Exceptions;
 
-namespace BiblioTech2.Api.Services;
+namespace BiblioTech.Api.Services;
 
-public class AutorService (BibliotecaContext db) : IAutorService
+public class AutorService(BibliotecaContext db) : IAutorService
 {
-    public async Task<List<AutorDto>> ListarAsync()
+    public async Task<Resultado<List<AutorDto>>> ListarAsync()
     {
-        return await db.Autores
+        var autores = await db.Autores
             .OrderBy(a => a.Nombre)
             .Select(a => new AutorDto
             {
                 Id = a.Id,
                 Nombre = a.Nombre,
                 Nacionalidad = a.Nacionalidad,
-                CantidadLibros = a.Libros.Count(),
-
+                CantidadLibros = a.Libros.Count
             })
             .ToListAsync();
-    }
 
-    public async Task<AutorDto> ObtenerAsync(int id)
+        return Resultado<List<AutorDto>>.ok(autores, MensajesAutor.Listado);
+    }
+    public async Task<Resultado<AutorDto>> ObtenerAsync(int id)
     {
-        return await db.Autores
+        var autor = await db.Autores
             .Where(a => a.Id == id)
             .Select(a => new AutorDto
             {
@@ -36,11 +36,16 @@ public class AutorService (BibliotecaContext db) : IAutorService
                 Nacionalidad = a.Nacionalidad,
                 CantidadLibros = a.Libros.Count
             })
-            .FirstOrDefaultAsync()
-            ?? throw new NoEncontradoException($"El autor {id} no existe");
+            .FirstOrDefaultAsync();
+
+        if (autor == null)
+            return Resultado<AutorDto>.NoEncontrado(MensajesAutor.NoExiste(id));
+
+        return Resultado<AutorDto>.ok(autor, MensajesAutor.Encontrado);
+
     }
 
-    public async Task<AutorDto> CrerAsync(AutorGuardarDto dto)
+    public async Task<Resultado<AutorDto>> CrearAsync(AutorGuardarDto dto)
     {
         var autor = new Autor
         {
@@ -49,30 +54,47 @@ public class AutorService (BibliotecaContext db) : IAutorService
         };
         db.Autores.Add(autor);
         await db.SaveChangesAsync();
-        return new AutorDto { Id = autor.Id, Nombre = autor.Nombre, Nacionalidad = autor.Nacionalidad };
+        var creado = new AutorDto
+        {
+            Id = autor.Id,
+            Nombre = autor.Nombre,
+            Nacionalidad = autor.Nacionalidad
+        };
+        return Resultado<AutorDto>.ok(creado, MensajesAutor.Creado);
     }
 
-    public async Task ActualizarAsync(int id, AutorGuardarDto dto)
+    public async Task<Resultado> ActualizarAsync(int id, AutorGuardarDto dto)
     {
-        var autor = await db.Autores.FindAsync(id)
-            ?? throw new NoEncontradoException($"El autor {id} no existe");
-       
+        var autor = await db.Autores.FindAsync(id);
+        if (autor == null)
+            return Resultado.NoEncontrado(MensajesAutor.NoExiste(id));
+
+
+
         autor.Nombre = dto.Nombre.Trim();
         autor.Nacionalidad = string.IsNullOrWhiteSpace(dto.Nacionalidad) ? null : dto.Nacionalidad.Trim();
 
         await db.SaveChangesAsync();
+
+        return Resultado.ok(MensajesAutor.Actualizado);
+
     }
 
-    public async Task EliminarAsync(int id)
+    public async Task<Resultado> EliminarAsync(int id)
     {
-        var autor = await db.Autores.FindAsync(id)
-            ?? throw new NoEncontradoException($"El autor {id} no existe");
+        var autor = await db.Autores.FindAsync(id);
+        if (autor is null)
+            return Resultado.NoEncontrado(MensajesAutor.NoExiste(id));
+
 
         var cantidadLibros = await db.Libros.CountAsync(l => l.Autores.Any(a => a.Id == id));
         if (cantidadLibros > 0)
+            return Resultado.ReglaNegocio(MensajesAutor.TieneLibros(cantidadLibros));
 
-            db.Autores.Remove(autor);
+        db.Autores.Remove(autor);
         await db.SaveChangesAsync();
-    }
 
+        return Resultado.ok(MensajesAutor.Eliminado);
+    }
 }
+
