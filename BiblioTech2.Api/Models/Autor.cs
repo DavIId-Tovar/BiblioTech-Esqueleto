@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BiblioTech2.Api.Models;
+﻿namespace BiblioTech2.Api.Models;
 
 public partial class Autor
 {
     public int Id { get; set; }
 
-    public string Nombre { get; set; } = null!;  
+    public string Nombre { get; set; } = null!;
 
     public string? Nacionalidad { get; set; }
 
-    public virtual ICollection<Libro> Libros { get; set; } = new List<Libro>();  // Propiedad de navegación para la relación uno a muchos con Libro
+    public virtual ICollection<Libro> Libros { get; set; } = new List<Libro>();
 }

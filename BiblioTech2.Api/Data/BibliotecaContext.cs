@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using BiblioTech2.Api.Models;
+﻿using BiblioTech2.Api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BiblioTech2.Api.Data;
 
 public partial class BibliotecaContext : DbContext
 {
-    public BibliotecaContext(DbContextOptions<BibliotecaContext> options) // Constructor; recibe las opciones de configuración de la base de datos
-                                                                          // Recibe la cadena desde Program.cs
+    public BibliotecaContext(DbContextOptions<BibliotecaContext> options)
         : base(options)
     {
     }
@@ -29,16 +26,15 @@ public partial class BibliotecaContext : DbContext
     {
         modelBuilder.Entity<Autor>(entity =>
         {
-            entity.Property(e => e.Nacionalidad).HasMaxLength(60); //Varchar(60)
+            entity.Property(e => e.Nacionalidad).HasMaxLength(60);
             entity.Property(e => e.Nombre).HasMaxLength(100);
         });
 
         modelBuilder.Entity<Libro>(entity =>
         {
-            entity.HasIndex(e => e.Titulo, "IX_Libros_Titulo");  // nos dice de tiene un índice en la columna Titulo de la tabla Libros
+            entity.HasIndex(e => e.Titulo, "IX_Libros_Titulo");
 
-            entity.HasIndex(e => e.Isbn, "UQ_Libros_ISBN").IsUnique();// nos dice que tiene un índice único en la columna ISBN de la tabla Libros
-                                                                      // prohibe datos duplicados en la columna ISBN de la tabla Libro--
+            entity.HasIndex(e => e.Isbn, "UQ_Libros_ISBN").IsUnique();
 
             entity.Property(e => e.Isbn)
                 .HasMaxLength(20)
